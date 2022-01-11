@@ -16,14 +16,14 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            version("compose", "1.0.5")
+            version("compose", "1.1.0-rc01")
             version("gradle", "7.0.0")
             version("android", "7.1.0-rc01")
 
             alias("gradle").to("com.android.tools.build", "gradle").versionRef("gradle")
             alias("android-app").toPluginId("com.android.application").versionRef("android")
             alias("android-lib").toPluginId("com.android.library").versionRef("android")
-            alias("kotlin").toPluginId("org.jetbrains.kotlin.android").version("1.5.31")
+            alias("kotlin").toPluginId("org.jetbrains.kotlin.android").version("1.6.0")
 
             alias("androidx-core").to("androidx.core:core-ktx:1.6.0")
             alias("androidx-compose-ui").to("androidx.compose.ui", "ui").versionRef("compose")
@@ -39,7 +39,6 @@ dependencyResolutionManagement {
                 "androidx-compose-ui-tooling-preview", "androidx-compose-material",
                 "androidx-lifecycle", "androidx-activity", "androidx-navigation"))
         }
-
     }
 }
 
