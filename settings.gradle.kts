@@ -16,14 +16,16 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("libs") {
-            version("compose", "1.0.5")
-            version("gradle", "7.0.0")
             version("android", "7.1.0-rc01")
+            version("compose", "1.1.0-rc01")
+            version("gradle", "7.0.0")
+            version("retrofit", "2.9.0")
+            version("coroutines", "1.6.0")
 
             alias("gradle").to("com.android.tools.build", "gradle").versionRef("gradle")
             alias("android-app").toPluginId("com.android.application").versionRef("android")
             alias("android-lib").toPluginId("com.android.library").versionRef("android")
-            alias("kotlin").toPluginId("org.jetbrains.kotlin.android").version("1.5.31")
+            alias("kotlin").toPluginId("org.jetbrains.kotlin.android").version("1.6.0")
 
             alias("androidx-core").to("androidx.core:core-ktx:1.6.0")
             alias("androidx-compose-ui").to("androidx.compose.ui", "ui").versionRef("compose")
@@ -38,8 +40,17 @@ dependencyResolutionManagement {
             bundle("androidx", listOf("androidx-core", "androidx-compose-ui",
                 "androidx-compose-ui-tooling-preview", "androidx-compose-material",
                 "androidx-lifecycle", "androidx-activity", "androidx-navigation"))
-        }
 
+            alias("coroutines-core").to("org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("coroutines")
+            alias("coroutines-android").to("org.jetbrains.kotlinx", "kotlinx-coroutines-android").versionRef("coroutines")
+
+            bundle("coroutines", listOf("coroutines-core", "coroutines-android"))
+
+            alias("retrofit2").to("com.squareup.retrofit2", "retrofit").versionRef("retrofit")
+            alias("retrofit2-converter").to("com.squareup.retrofit2", "converter-gson").versionRef("retrofit")
+
+            bundle("retrofit", listOf("retrofit2", "retrofit2-converter"))
+        }
     }
 }
 
