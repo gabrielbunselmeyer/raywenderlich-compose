@@ -1,9 +1,9 @@
 package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data
 
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.models.GitHubFileModel
-import convertBase64ToJson
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.models.TutorialContentModel
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.models.convertContentToTutorialModel
 import okhttp3.OkHttpClient
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -16,8 +16,9 @@ class PracticalExamplesRepository {
         .build()
         .create(PracticalExamplesApi::class.java)
 
-    suspend fun getArticles() = gitHubApi.getArticlesFileModel().content
+    suspend fun getArticles(): TutorialContentModel = gitHubApi.getArticlesFileModel().convertContentToTutorialModel()
 
+    suspend fun getVideos(): TutorialContentModel = gitHubApi.getVideosFileModel().convertContentToTutorialModel()
 }
 
 interface PracticalExamplesApi {
@@ -25,5 +26,5 @@ interface PracticalExamplesApi {
     suspend fun getArticlesFileModel(): GitHubFileModel
 
     @GET("videos.json")
-    suspend fun getVideosFileModel(): Response<GitHubFileModel>
+    suspend fun getVideosFileModel(): GitHubFileModel
 }

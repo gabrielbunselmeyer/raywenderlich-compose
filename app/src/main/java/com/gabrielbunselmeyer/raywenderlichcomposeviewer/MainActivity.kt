@@ -41,7 +41,13 @@ fun Greeting(name: String) {
 
     LaunchedEffect(true) {
         this.launch {
-            response.value = PracticalExamplesRepository().getArticles()
+            PracticalExamplesRepository().getArticles().data.forEach {
+                response.value += it.attributes.content_type
+            }
+
+            PracticalExamplesRepository().getVideos().data.forEach {
+                response.value += it.attributes.content_type
+            }
         }
     }
 }
