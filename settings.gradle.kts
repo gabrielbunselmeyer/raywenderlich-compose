@@ -50,6 +50,8 @@ dependencyResolutionManagement {
             alias("retrofit2-converter").to("com.squareup.retrofit2", "converter-gson").versionRef("retrofit")
 
             bundle("retrofit", listOf("retrofit2", "retrofit2-converter"))
+
+            alias("coil").to("io.coil-kt", "coil-compose").version("1.4.0")
         }
     }
 }

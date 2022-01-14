@@ -1,4 +1,4 @@
-package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.models
+package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,20 +8,21 @@ import com.google.gson.annotations.SerializedName
  * A more robust solution would probably simplify most of these classes.
  */
 data class TutorialContentModel (
-    @SerializedName("data") val data : List<ContentData>,
+    @SerializedName("data") val data : List<TutorialData>,
     @SerializedName("included") val included : List<Included>,
     @SerializedName("links") val links : Links,
     @SerializedName("meta") val meta : Meta
 )
 
-data class ContentData (
+data class TutorialData (
     @SerializedName("id") val id : Int,
     @SerializedName("type") val type : String,
-    @SerializedName("attributes") val attributes : ContentAttributes,
+    @SerializedName("attributes") val attributes : TutorialAttributes,
+    @SerializedName("relationships") val relationships : Relationships,
     @SerializedName("links") val links : Links
 )
 
-data class ContentAttributes (
+data class TutorialAttributes (
     @SerializedName("uri") val uri : String,
     @SerializedName("name") val name : String,
     @SerializedName("description") val description : String,
@@ -91,7 +92,12 @@ data class Meta (
 )
 
 data class Progression (
-    @SerializedName("data") val data : String
+    @SerializedName("data") val data : ProgressionData
+)
+
+data class ProgressionData(
+    @SerializedName("id") val id : String,
+    @SerializedName("type") val type : String,
 )
 
 data class Bookmark (

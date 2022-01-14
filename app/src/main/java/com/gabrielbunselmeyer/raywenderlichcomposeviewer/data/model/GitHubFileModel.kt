@@ -1,8 +1,7 @@
-package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.models
+package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model
 
 import android.util.Base64
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 /**
