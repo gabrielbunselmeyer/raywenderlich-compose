@@ -11,7 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.rememberImagePainter
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
@@ -55,9 +56,12 @@ private fun CardTitle(item: TutorialData) {
                 blendMode = BlendMode.Color
             ),
             modifier = Modifier
-                .sizeIn(maxHeight = Dimens.TutorialCard.cardImageMaxSize, maxWidth = Dimens.TutorialCard.cardImageMaxSize)
+                .sizeIn(
+                    maxHeight = Dimens.TutorialCard.cardImageMaxSize,
+                    maxWidth = Dimens.TutorialCard.cardImageMaxSize
+                )
                 .clip(Shapes.small)
-            )
+        )
 
         Column(
             verticalArrangement = Arrangement.Center,
@@ -77,7 +81,11 @@ private fun CardTitle(item: TutorialData) {
                 val technologiesSplit =
                     item.attributes.technology_triple_string
                         .split(regex = Regex(" [0-9.,]* "))
-                        .let { it.update(it.lastIndex, it.last().filterNot { char -> char.isDigit() || char == '.' }) }
+                        .let {
+                            it.update(
+                                it.lastIndex,
+                                it.last().filterNot { char -> char.isDigit() || char == '.' })
+                        }
 
                 Text(
                     text = technologiesSplit.joinToString(separator = " & "),
@@ -96,9 +104,10 @@ private fun CardTitle(item: TutorialData) {
 private fun CardDescription(item: TutorialData) {
 
     val formattedDate = remember {
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(item.attributes.released_at)?.let {
-            SimpleDateFormat("MMM d", Locale.US).format(it)
-        }
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(item.attributes.released_at)
+            ?.let {
+                SimpleDateFormat("MMM d", Locale.US).format(it)
+            }
     }
 
     val isVideoCourse = item.attributes.content_type == "collection"

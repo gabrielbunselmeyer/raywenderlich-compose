@@ -18,6 +18,7 @@ object Dimens {
         val titleTextPadding = PaddingValues(start = 12.dp)
         val cardTitleHeight = 60.dp
         val cardImageMaxSize = 96.dp
+
         // We want this very specific value for the text to align with the end of
         // the thumbnail image.
         val subtitleSize = 13.dp

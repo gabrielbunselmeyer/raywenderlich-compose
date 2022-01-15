@@ -18,9 +18,11 @@ class PracticalExamplesRepository {
         .build()
         .create(PracticalExamplesApi::class.java)
 
-    suspend fun getArticles(): TutorialContentModel = gitHubApi.getArticlesFileModel().convertContentToTutorialModel()
+    suspend fun getArticles(): TutorialContentModel =
+        gitHubApi.getArticlesFileModel().convertContentToTutorialModel()
 
-    suspend fun getVideos(): TutorialContentModel = gitHubApi.getVideosFileModel().convertContentToTutorialModel()
+    suspend fun getVideos(): TutorialContentModel =
+        gitHubApi.getVideosFileModel().convertContentToTutorialModel()
 
     // The GitHubAPI has a relatively low rate limit if you're not authenticated.
     // This interceptor uses simple authentication through passing in my GitHub user. No PW needed.
@@ -29,7 +31,13 @@ class PracticalExamplesRepository {
             val request = chain.request()
             val authenticatedRequest = request
                 .newBuilder()
-                .header("Authorization", Credentials.basic("gabrielbunselmeyer", "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"))
+                .header(
+                    "Authorization",
+                    Credentials.basic(
+                        "gabrielbunselmeyer",
+                        "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"
+                    )
+                )
                 .build()
 
             return chain.proceed(authenticatedRequest)

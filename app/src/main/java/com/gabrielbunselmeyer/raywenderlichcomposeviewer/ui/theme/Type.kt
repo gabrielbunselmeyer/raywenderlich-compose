@@ -41,11 +41,13 @@ val Typography = Typography(
     )
 )
 
-val TutorialAccessLevelFont = Typography.caption.let { it.copy(
-    color = it.color.copy(alpha = 0.65f),
-    fontWeight = FontWeight.W400,
-    letterSpacing = 0.05.sp
-) }
+val TutorialAccessLevelFont = Typography.caption.let {
+    it.copy(
+        color = it.color.copy(alpha = 0.65f),
+        fontWeight = FontWeight.W400,
+        letterSpacing = 0.05.sp
+    )
+}
 
 val RubikFontFamily = FontFamily(
     Font(R.font.rubik_regular)

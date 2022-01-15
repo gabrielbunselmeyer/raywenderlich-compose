@@ -46,7 +46,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun updateContent(content : List<TutorialData>) {
+    private fun updateContent(content: List<TutorialData>) {
         mutableState.mutate {
             copy(loadedTutorials = content)
         }

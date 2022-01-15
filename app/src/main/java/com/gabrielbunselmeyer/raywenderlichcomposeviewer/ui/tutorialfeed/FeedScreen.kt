@@ -3,7 +3,9 @@ package com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.tutorialfeed
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.MainViewModel
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens

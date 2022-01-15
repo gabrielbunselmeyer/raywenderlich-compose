@@ -11,8 +11,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SearchBar() {
-    Box(modifier = Modifier
-        .background(color = Color.Blue)
-        .fillMaxWidth()
-        .height(50.dp))
+    Box(
+        modifier = Modifier
+            .background(color = Color.Blue)
+            .fillMaxWidth()
+            .height(50.dp)
+    )
 }
