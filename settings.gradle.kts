@@ -52,6 +52,7 @@ dependencyResolutionManagement {
             bundle("retrofit", listOf("retrofit2", "retrofit2-converter"))
 
             alias("coil").to("io.coil-kt", "coil-compose").version("1.4.0")
+            alias("fuzzywuzzy").to("com.willowtreeapps", "fuzzywuzzy-kotlin").version("0.9.0")
         }
     }
 }

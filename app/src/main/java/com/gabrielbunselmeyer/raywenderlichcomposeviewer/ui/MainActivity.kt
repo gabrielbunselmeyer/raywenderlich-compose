@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.RayWenderlichComposeViewerTheme
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.tutorialfeed.FeedScreen
@@ -18,11 +20,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val state by viewModel.state.collectAsState(State())
+
             RayWenderlichComposeViewerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    FeedScreen(viewModel = viewModel)
+                    FeedScreen(state, viewModel::dispatch)
                 }
             }
         }

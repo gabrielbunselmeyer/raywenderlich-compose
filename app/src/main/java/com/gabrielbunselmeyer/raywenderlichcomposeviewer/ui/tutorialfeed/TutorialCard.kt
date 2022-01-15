@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.rememberImagePainter
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
@@ -121,6 +122,7 @@ private fun CardDescription(item: TutorialData) {
         Text(
             text = item.attributes.description_plain_text,
             style = Typography.body2,
+            textAlign = TextAlign.Justify
         )
 
         Row(

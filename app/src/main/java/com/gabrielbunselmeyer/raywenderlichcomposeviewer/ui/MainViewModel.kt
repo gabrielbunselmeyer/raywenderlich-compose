@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.PracticalExamplesRepository
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Action
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.toast
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -32,6 +33,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         throwable.printStackTrace()
         throwable.message?.let {
             application.applicationContext.toast("$errorMessage $it")
+        }
+    }
+
+    fun dispatch(action: Action) {
+        when(action) {
+            Action.FetchContent -> { fetchContent() }
+            is Action.KeyboardStatusChanged -> mutableState.mutate { copy(isKeyboardOpen = action.isOpen) }
+            is Action.SearchQueryChanged -> mutableState.mutate { copy(searchQuery = action.searchQuery) }
         }
     }
 

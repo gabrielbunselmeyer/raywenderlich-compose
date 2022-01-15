@@ -9,6 +9,11 @@ object Dimens {
         val contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp)
     }
 
+    object ListToolbar {
+        val toolbarPadding = PaddingValues(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 14.dp)
+        val bottomTextPadding = PaddingValues(top = 8.dp)
+    }
+
     object TutorialCard {
         val padding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 14.dp)
         val height = 160.dp
