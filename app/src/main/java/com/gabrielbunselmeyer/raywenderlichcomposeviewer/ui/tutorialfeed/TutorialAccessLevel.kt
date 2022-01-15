@@ -19,7 +19,7 @@ import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.TutorialAccess
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.TutorialAccessLevelGradient
 
 @Composable
-fun TutorialAccessLevel(isFree: Boolean, modifier: Modifier = Modifier) {
+fun TutorialAccessLevel(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterEnd,
         modifier = modifier
@@ -37,19 +37,11 @@ fun TutorialAccessLevel(isFree: Boolean, modifier: Modifier = Modifier) {
 
         Box(
             contentAlignment = Alignment.Center,
-            modifier =
-            if (isFree)
-                badgeModifier.background(MaterialTheme.colors.secondary)
-            else
-                badgeModifier.background(TutorialAccessLevelGradient)
+            modifier = badgeModifier.background(TutorialAccessLevelGradient)
         ) {
             Text(
-                text = if (isFree) "free" else "PRO",
-                style =
-                if (isFree)
-                    TutorialAccessLevelFont
-                else
-                    TutorialAccessLevelFont.copy(color = MaterialTheme.colors.secondary)
+                text = "PRO",
+                style = TutorialAccessLevelFont.copy(color = MaterialTheme.colors.secondary)
             )
         }
     }

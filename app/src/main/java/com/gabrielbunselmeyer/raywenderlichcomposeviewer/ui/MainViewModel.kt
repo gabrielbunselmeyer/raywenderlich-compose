@@ -38,13 +38,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun dispatch(action: Action) {
         when(action) {
-            Action.FetchContent -> { fetchContent() }
+            is Action.FetchContent -> { fetchContent(action.isFirstFetch) }
             is Action.KeyboardStatusChanged -> mutableState.mutate { copy(isKeyboardOpen = action.isOpen) }
             is Action.SearchQueryChanged -> mutableState.mutate { copy(searchQuery = action.searchQuery) }
         }
     }
 
-    fun fetchContent() {
+    private fun fetchContent(isFirstFetch: Boolean) {
+        // If it's not the first, we want to clear the list and shot the skeleton again
+        // while polling the API again.
+        if (!isFirstFetch) {
+            mutableState.mutate { copy(loadedTutorials = emptyList()) }
+        }
+
         // Retrofit makes so we don't need to include the Dispatcher.IO scheduler here.
         viewModelScope.launch(repositoryCoroutinesExceptionHandler) {
             val contentList = mutableListOf<TutorialData>()

@@ -53,6 +53,7 @@ dependencyResolutionManagement {
 
             alias("coil").to("io.coil-kt", "coil-compose").version("1.4.0")
             alias("fuzzywuzzy").to("com.willowtreeapps", "fuzzywuzzy-kotlin").version("0.9.0")
+            alias("accompanist").to("com.google.accompanist", "accompanist-swiperefresh").version("0.22.0-rc")
         }
     }
 }

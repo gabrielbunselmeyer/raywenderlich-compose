@@ -33,6 +33,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         compose = true
@@ -53,6 +54,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.coil)
     implementation(libs.fuzzywuzzy)
+    implementation(libs.accompanist)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

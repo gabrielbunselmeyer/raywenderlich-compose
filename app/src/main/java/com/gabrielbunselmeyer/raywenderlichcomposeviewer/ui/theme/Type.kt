@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.R
 
@@ -40,6 +41,14 @@ val Typography = Typography(
         fontSize = 12.sp
     )
 )
+
+val ToolbarTextFont = Typography.caption.let {
+    it.copy(
+        color = it.color.copy(alpha = 0.65f),
+        fontWeight = FontWeight.W600,
+        fontSize = 14.sp
+    )
+}
 
 val TutorialAccessLevelFont = Typography.caption.let {
     it.copy(

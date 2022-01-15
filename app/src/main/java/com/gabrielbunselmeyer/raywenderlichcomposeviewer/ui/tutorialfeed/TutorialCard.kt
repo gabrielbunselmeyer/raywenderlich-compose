@@ -112,7 +112,7 @@ private fun CardDescription(item: TutorialData) {
     }
 
     val isVideoCourse = item.attributes.content_type == "collection"
-    val isContentFree = item.attributes.free
+    val isPaidContent = !item.attributes.free
 
     Column(
         modifier = Modifier
@@ -129,14 +129,19 @@ private fun CardDescription(item: TutorialData) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxSize()
         ) {
-            TutorialAccessLevel(isFree = isContentFree)
+            if (isPaidContent) {
+                TutorialAccessLevel()
+            }
 
             Text(
                 text = "Posted ${formattedDate.orEmpty()} \u2022 " +
                         "${if (isVideoCourse) "Video Course" else "Article"} " +
                         "(${item.attributes.duration} ${if (isVideoCourse) "minutes" else "words"})",
                 style = Typography.caption,
-                modifier = Modifier.padding(Dimens.TutorialCard.descriptionInfoTextPadding)
+                modifier = if (isPaidContent) 
+                    Modifier.padding(Dimens.TutorialCard.descriptionInfoTextPadding)
+                else
+                    Modifier
             )
         }
     }

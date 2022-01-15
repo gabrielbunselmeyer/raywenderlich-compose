@@ -10,8 +10,15 @@ object Dimens {
     }
 
     object ListToolbar {
+        const val searchTextFieldWidth = 0.80f
+
         val toolbarPadding = PaddingValues(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 14.dp)
-        val bottomTextPadding = PaddingValues(top = 8.dp)
+        val filterIconSize = 28.dp
+        val sortIconSize = 14.dp
+        val sortIconPadding = PaddingValues(end = 2.dp)
+        val bottomTextPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 14.dp)
+        val bottomTextDividerPadding = PaddingValues(horizontal = 8.dp)
+
     }
 
     object TutorialCard {
@@ -20,7 +27,7 @@ object Dimens {
         val elevation = 20.dp
 
         val contentPadding = PaddingValues(all = 16.dp)
-        val titleTextPadding = PaddingValues(start = 12.dp)
+        val titleTextPadding = PaddingValues(start = 10.dp)
         val cardTitleHeight = 60.dp
         val cardImageMaxSize = 96.dp
 
