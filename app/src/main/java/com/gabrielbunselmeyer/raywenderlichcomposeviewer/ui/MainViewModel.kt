@@ -42,7 +42,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             contentList.addAll(repository.getArticles().data)
             contentList.addAll(repository.getVideos().data)
-
             updateContent(contentList)
         }
     }

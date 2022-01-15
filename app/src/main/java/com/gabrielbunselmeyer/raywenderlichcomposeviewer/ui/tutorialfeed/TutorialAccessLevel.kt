@@ -1,0 +1,56 @@
+package com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.tutorialfeed
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.*
+
+@Composable
+fun TutorialAccessLevel(isFree: Boolean, modifier: Modifier = Modifier) {
+    Box (
+        contentAlignment = Alignment.CenterEnd,
+        modifier = modifier
+    ) {
+        val badgeModifier = Modifier
+            .size(
+                Dimens.TutorialAccessLevel.badgeWidth,
+                Dimens.TutorialAccessLevel.badgeHeight
+            )
+            .clip(RoundedCornerShape(16.dp))
+            .border(
+                border = BorderStroke(1.dp, GeneralColors.lightBurgundy.copy(alpha = 0.3f)),
+                shape = RoundedCornerShape(16.dp))
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier =
+                if (isFree)
+                    badgeModifier.background(MaterialTheme.colors.secondary)
+                else
+                    badgeModifier.background(TutorialAccessLevelGradient)
+        ) {
+            Text (
+                text = if (isFree) "free" else "PRO",
+                style =
+                    if (isFree)
+                        TutorialAccessLevelFont
+                    else
+                        TutorialAccessLevelFont.copy(color = MaterialTheme.colors.secondary)
+            )
+        }
+    }
+
+}

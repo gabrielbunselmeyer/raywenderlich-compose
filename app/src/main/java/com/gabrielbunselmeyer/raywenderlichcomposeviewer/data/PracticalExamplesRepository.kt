@@ -3,6 +3,7 @@ package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.GitHubFileModel
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialContentModel
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.convertContentToTutorialModel
+import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ class PracticalExamplesRepository {
             val request = chain.request()
             val authenticatedRequest = request
                 .newBuilder()
-                .header("Authorization", "gabrielbunselmeyer")
+                .header("Authorization", Credentials.basic("gabrielbunselmeyer", "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"))
                 .build()
 
             return chain.proceed(authenticatedRequest)

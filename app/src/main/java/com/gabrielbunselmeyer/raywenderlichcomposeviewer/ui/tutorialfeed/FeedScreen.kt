@@ -15,9 +15,7 @@ fun FeedScreen(viewModel: MainViewModel) {
     // Maybe put this in MainActivity? Or maybe in the ViewModel init.
     viewModel.fetchContent()
 
-    Scaffold(
-        topBar = { SearchBar() }
-    ) {
+    Scaffold {
         TutorialList(state)
     }
 }

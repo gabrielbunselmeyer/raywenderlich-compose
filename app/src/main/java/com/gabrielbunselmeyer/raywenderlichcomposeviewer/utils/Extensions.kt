@@ -8,3 +8,6 @@ fun Context.toast(message: CharSequence) =
 
 fun Context.toast(message: String) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun <T> List<T>.update(index: Int, item: T): List<T> =
+    toMutableList().apply { this[index] = item }
