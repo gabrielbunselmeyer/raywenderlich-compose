@@ -22,7 +22,7 @@ Brought in through the [GitHub API](https://docs.github.com/en/rest) in [Practic
 
 Controlling all this is a single [`MainViewModel`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/MainViewModel.kt). In there, the app [`State`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/State.kt) is created and made available as a [`StateFlow`](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow).
 
-The `MainViewModel` is instantiated in the `MainActivity`, and the `State` observed there. This observable is passed into all the children composables, so the `MainViewModel` itself stays in the `MainActivity`. Together with the `State`, the composables also receive a `Dispatcher` function from the `MainViewModel`, which uses `Actions` to update the `State` and do whatever else is necessary.
+The `MainViewModel` is instantiated in the `MainActivity`, and the `State` observed there. This observable is passed into all the children composables, so the `MainViewModel` itself stays in the `MainActivity`. Together with the `State`, the composables also receive a `Dispatcher` function from the `MainViewModel`, which uses [`Actions`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/model/Action.kt) to update the `State` and do whatever else is necessary.
 
 This way, composables down the line can observe the `State` and dispatch `Actions` to the `MainViewModel` if needed, without needing direct access to the `MainViewModel` object.
 
