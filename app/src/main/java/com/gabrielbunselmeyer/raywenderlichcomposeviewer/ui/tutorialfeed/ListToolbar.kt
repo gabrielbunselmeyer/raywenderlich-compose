@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
@@ -139,7 +140,9 @@ private fun FilterSwitch(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(filterMenuItemPadding)
+        modifier = Modifier
+            .padding(filterMenuItemPadding)
+            .fillMaxWidth()
     ) {
         Text(
             text = title,
@@ -179,13 +182,15 @@ private fun FilterSwitch(
                     Text(
                         text = toggleState,
                         style = Typography.body2,
+                        overflow = TextOverflow.Visible,
+                        maxLines = 1,
                         color = if (isSelected)
                             MaterialTheme.colors.onPrimary
                         else
                             MaterialTheme.colors.onSurface,
                         modifier = Modifier
                             .align(CenterVertically)
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 6.dp)
                     )
                 }
             }
