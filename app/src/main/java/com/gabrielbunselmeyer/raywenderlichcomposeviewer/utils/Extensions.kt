@@ -60,7 +60,6 @@ fun Modifier.clearFocusOnKeyboardDismiss(isKeyboardOpen: Boolean): Modifier = co
 }
 
 fun TutorialData.isFilteredOut(state: State): Boolean {
-    // First we filter by the options in the filter menu.
     if (state.filterDifficulty != Difficulty.ANY) {
         if (this.attributes.difficulty != state.filterDifficulty.name.lowercase()) {
             return true

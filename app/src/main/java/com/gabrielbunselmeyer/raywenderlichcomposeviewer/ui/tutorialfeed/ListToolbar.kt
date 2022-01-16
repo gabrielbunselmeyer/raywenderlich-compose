@@ -42,6 +42,13 @@ import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.`if`
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.clearFocusOnKeyboardDismiss
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.isKeyboardOpen
 
+/**
+ * This is the header for [TutorialListScreen]. It has a search [TextField] and a hidden [FilterMenu].
+ *
+ * The [FilterMenu] uses switches, which should probably be Chips in Android-land as switches
+ * are an iOS-centric thing. But Jetpack Compose doesn't have Chips by default and due to time
+ * constraints I decided on keeping the switches.
+ */
 @Composable
 fun ListToolbar(
     state: State,
@@ -203,7 +210,7 @@ private fun FilterButton(
             .clickable { buttonClick() }
     ) {
         Icon(
-            painter = rememberImagePainter(data =  R.drawable.ic_filter),
+            painter = rememberImagePainter(data = R.drawable.ic_filter),
             contentDescription = "Icon for opening the tutorial list filter menu.",
             tint = filterIconColorAnimation,
             modifier = Modifier

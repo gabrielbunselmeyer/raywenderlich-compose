@@ -26,6 +26,13 @@ import com.valentinilk.shimmer.shimmer
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * This file describes the card containing a tutorial's information. A list of these cards is
+ * displayed in [TutorialListScreen].
+ * 
+ * We accept a nullable [TutorialData] as, if null, we want to show the skeleton while loading the
+ * content.
+ */
 @Composable
 fun TutorialCard(item: TutorialData?) {
     Surface(
@@ -74,9 +81,10 @@ private fun CardTitle(item: TutorialData?) {
                 colorFilter = ColorFilter.tint(
                     color = MaterialTheme.colors.primary,
                     blendMode = if (android.os.Build.VERSION.SDK_INT >= 29)
-                            BlendMode.Color
-                        else
-                            BlendMode.Lighten
+                        BlendMode.Color
+                    else
+                        // Couldn't find a good solution here for API < 29.
+                        BlendMode.Lighten
                 ),
                 modifier = Modifier
                     .sizeIn(
@@ -107,9 +115,10 @@ private fun CardTitle(item: TutorialData?) {
                     overflow = TextOverflow.Ellipsis
                 )
 
+                // The technologies string includes versions. I.e: Kotlin 1.3, Android 5.1, Android Studio 3.6
+                // We want to display it as Kotlin & Android & Android Studio and remember it for recompositions.
+                // We can do rememberSaveable because in the LazyColumn, each Card has a key.
                 if (item.attributes.technology_triple_string.isNotEmpty()) {
-                    // The technologies string includes versions. I.e: Kotlin 1.3, Android 5.1, Android Studio 3.6
-                    // We want to display it as Kotlin & Android & Android Studio
                     val technologiesSplit = rememberSaveable {
                         item.attributes.technology_triple_string
                             .split(regex = Regex(" [0-9.,]* "))

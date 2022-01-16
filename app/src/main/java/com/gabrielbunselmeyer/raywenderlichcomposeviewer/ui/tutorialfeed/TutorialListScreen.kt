@@ -73,9 +73,15 @@ private fun TutorialList(state: State, dispatcher: (Action) -> Unit) {
                     if (lowercaseStringToMatch.isNotBlank()) {
                         val hasMatch =
                             tutorial.attributes.name.fuzzlyMatches(lowercaseStringToMatch) ||
-                                    tutorial.attributes.technology_triple_string.fuzzlyMatches(lowercaseStringToMatch) ||
-                                    tutorial.attributes.contributor_string.fuzzlyMatches(lowercaseStringToMatch) ||
-                                    tutorial.attributes.description_plain_text.fuzzlyMatches(lowercaseStringToMatch)
+                                    tutorial.attributes.technology_triple_string.fuzzlyMatches(
+                                        lowercaseStringToMatch
+                                    ) ||
+                                    tutorial.attributes.contributor_string.fuzzlyMatches(
+                                        lowercaseStringToMatch
+                                    ) ||
+                                    tutorial.attributes.description_plain_text.fuzzlyMatches(
+                                        lowercaseStringToMatch
+                                    )
 
                         if (!hasMatch) return@mapNotNull null
                     }
@@ -102,9 +108,10 @@ private fun TutorialList(state: State, dispatcher: (Action) -> Unit) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = {
-                        filteredAndOrderedTutorials = emptyList()
-                        dispatcher(Action.FetchContent(isFirstFetch = false))
-                    },
+            // Empty the local list so the skeleton appears again.
+            filteredAndOrderedTutorials = emptyList()
+            dispatcher(Action.FetchContent(isFirstFetch = false))
+        },
         refreshTriggerDistance = 180.dp
     ) {
         LazyColumn(
@@ -114,6 +121,8 @@ private fun TutorialList(state: State, dispatcher: (Action) -> Unit) {
                 ListToolbar(state, filteredAndOrderedTutorials.size, dispatcher)
             }
 
+            // If the filtered list is empty, we want to show a shimmering layout skeleton
+            // while the content is loaded.
             if (filteredAndOrderedTutorials.isEmpty() && !filteredAllTutorials) {
                 items(count = 5) {
                     TutorialCard(null)
@@ -128,7 +137,6 @@ private fun TutorialList(state: State, dispatcher: (Action) -> Unit) {
                     TutorialCard(item)
                 }
             }
-
         }
     }
 }
