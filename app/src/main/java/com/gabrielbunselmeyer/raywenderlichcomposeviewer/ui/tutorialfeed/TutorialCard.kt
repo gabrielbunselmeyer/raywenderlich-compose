@@ -81,7 +81,7 @@ private fun CardTitle(item: TutorialData) {
             if (item.attributes.technology_triple_string.isNotEmpty()) {
                 // The technologies string includes versions. I.e: Kotlin 1.3, Android 5.1, Android Studio 3.6
                 // We want to display it as Kotlin & Android & Android Studio
-                val technologiesSplit =
+                val technologiesSplit = rememberSaveable {
                     item.attributes.technology_triple_string
                         .split(regex = Regex(" [0-9.,]* "))
                         .let {
@@ -89,6 +89,7 @@ private fun CardTitle(item: TutorialData) {
                                 it.lastIndex,
                                 it.last().filterNot { char -> char.isDigit() || char == '.' })
                         }
+                }
 
                 Text(
                     text = technologiesSplit.joinToString(separator = " & "),
