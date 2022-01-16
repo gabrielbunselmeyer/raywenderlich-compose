@@ -1,6 +1,10 @@
 package com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui
 
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.AccessLevel
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.ContentType
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Difficulty
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Ordering
 
 data class State(
     val hasLoadedTutorials: Boolean = false,

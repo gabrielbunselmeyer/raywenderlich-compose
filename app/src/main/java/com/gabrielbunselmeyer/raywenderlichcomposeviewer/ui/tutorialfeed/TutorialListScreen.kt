@@ -5,10 +5,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Action
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Ordering
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Ordering
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Action
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.convertDateToSimpleDateFormat
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.isFilteredOut

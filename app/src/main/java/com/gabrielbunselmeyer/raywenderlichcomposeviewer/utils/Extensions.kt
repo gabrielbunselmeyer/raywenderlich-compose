@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.AccessLevel
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.ContentType
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Difficulty
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.AccessLevel
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.ContentType
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Difficulty
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
 import java.text.SimpleDateFormat

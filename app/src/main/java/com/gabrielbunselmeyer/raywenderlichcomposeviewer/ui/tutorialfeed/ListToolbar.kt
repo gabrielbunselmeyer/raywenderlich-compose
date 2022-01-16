@@ -36,6 +36,7 @@ import coil.compose.rememberImagePainter
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.R
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.TutorialListToolbar.filterMenuItemPadding
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.TutorialListToolbar.filterSwitchPadding

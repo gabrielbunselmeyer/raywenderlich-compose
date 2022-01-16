@@ -1,4 +1,4 @@
-package com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model
+package com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model
 
 sealed class Action {
 

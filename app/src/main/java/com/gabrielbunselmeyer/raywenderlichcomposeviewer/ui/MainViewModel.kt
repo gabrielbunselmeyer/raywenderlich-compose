@@ -5,6 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.PracticalExamplesRepository
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.AccessLevel
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Action
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.ContentType
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.model.Difficulty
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.toast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
