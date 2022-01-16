@@ -19,6 +19,9 @@ object Dimens {
         val bottomTextPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 14.dp)
         val bottomTextDividerPadding = PaddingValues(horizontal = 8.dp)
 
+        val filterMenuPadding = PaddingValues(start = 8.dp, top = 16.dp, end = 8.dp, bottom = 2.dp)
+        val filterMenuItemPadding = PaddingValues(bottom = 12.dp)
+        val filterSwitchPadding = PaddingValues(start = 8.dp)
     }
 
     object TutorialCard {

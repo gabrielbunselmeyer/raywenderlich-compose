@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.PracticalExamplesRepository
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Action
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.toast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 
 /**
  * Because this is a small app, I've opted to using a single ViewModel.
@@ -41,6 +41,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             is Action.FetchContent -> { fetchContent(action.isFirstFetch) }
             is Action.KeyboardStatusChanged -> mutableState.mutate { copy(isKeyboardOpen = action.isOpen) }
             is Action.SearchQueryChanged -> mutableState.mutate { copy(searchQuery = action.searchQuery) }
+            is Action.FilterChanged -> mutableState.mutate {
+                when (action.selectedFilter) {
+                    is Difficulty -> copy(filterDifficulty = action.selectedFilter)
+                    is ContentType -> copy(filterContentType = action.selectedFilter)
+                    is AccessLevel -> copy(filterAccessLevel = action.selectedFilter)
+                    else -> { throw IllegalStateException("Failed to get filter enum.") }
+                }
+            }
+            is Action.SortingPopupToggled -> mutableState.mutate { copy(isSortingPopupOpen = !state.value.isSortingPopupOpen) }
+            is Action.SortingOrderSelected -> mutableState.mutate { copy(currentSortingRule = action.sortingRule) }
         }
     }
 
@@ -57,6 +67,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             contentList.addAll(repository.getArticles().data)
             contentList.addAll(repository.getVideos().data)
+
             updateContent(contentList)
         }
     }

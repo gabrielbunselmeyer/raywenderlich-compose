@@ -7,10 +7,12 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.toLowerCase
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Action
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
+import androidx.compose.ui.unit.dp
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.convertDateToSimpleDateFormat
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.isFilteredOut
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.willowtreeapps.fuzzywuzzy.diffutils.FuzzySearch
@@ -32,43 +34,64 @@ fun FeedScreen(state: State, dispatcher: (Action) -> Unit) {
 private fun TutorialList(state: State, dispatcher: (Action) -> Unit) {
 
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshingTutorialList)
-    var filteredTutorials by remember { mutableStateOf(listOf<TutorialData>()) }
+    var filteredAndOrderedTutorials by remember { mutableStateOf(listOf<TutorialData>()) }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(state.loadedTutorials, state.searchQuery) {
+    // There are quite a few scenarios we want to reload this in.
+    LaunchedEffect(
+        state.loadedTutorials,
+        state.searchQuery,
+        state.filterAccessLevel,
+        state.filterContentType,
+        state.filterDifficulty,
+        state.currentSortingRule
+    ) {
         scope.launch {
             val lowercaseStringToMatch = state.searchQuery.lowercase()
 
-            filteredTutorials =
-                if (lowercaseStringToMatch.isBlank()) {
-                    state.loadedTutorials
+            // First we check whether or not the tutorial is filtered through the filter menu.
+            // If not, we check if there's a search query active.
+            // If there is, we check whether or not some of the tutorial's info matches it.
+            val filteredTutorials = state.loadedTutorials.mapNotNull { tutorial ->
+                if (tutorial.isFilteredOut(state)) {
+                    return@mapNotNull null
                 } else {
-                    state.loadedTutorials.mapNotNull { tutorial ->
+                    if (lowercaseStringToMatch.isNotBlank()) {
                         val hasMatch =
                             tutorial.attributes.name.fuzzlyMatches(lowercaseStringToMatch) ||
-                            tutorial.attributes.technology_triple_string.fuzzlyMatches(lowercaseStringToMatch) ||
-                            tutorial.attributes.contributor_string.fuzzlyMatches(lowercaseStringToMatch) ||
-                            tutorial.attributes.description_plain_text.fuzzlyMatches(lowercaseStringToMatch)
+                                    tutorial.attributes.technology_triple_string.fuzzlyMatches(lowercaseStringToMatch) ||
+                                    tutorial.attributes.contributor_string.fuzzlyMatches(lowercaseStringToMatch) ||
+                                    tutorial.attributes.description_plain_text.fuzzlyMatches(lowercaseStringToMatch)
 
-                        if (hasMatch) tutorial
-                        else null
+                        if (!hasMatch) return@mapNotNull null
                     }
+
+                    return@mapNotNull tutorial
+                }
+            }
+
+            filteredAndOrderedTutorials =
+                if (state.currentSortingRule == Ordering.NEWEST) {
+                    filteredTutorials.sortedByDescending { it.convertDateToSimpleDateFormat() }
+                } else {
+                    filteredTutorials.sortedBy { it.convertDateToSimpleDateFormat() }
                 }
         }
     }
 
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = { dispatcher(Action.FetchContent(isFirstFetch = false)) }
+        onRefresh = { dispatcher(Action.FetchContent(isFirstFetch = false)) },
+        refreshTriggerDistance = 180.dp
     ) {
         LazyColumn(
             contentPadding = Dimens.FeedScreen.contentPadding
         ) {
             item {
-                ListToolbar(state, filteredTutorials.size, dispatcher)
+                ListToolbar(state, filteredAndOrderedTutorials.size, dispatcher)
             }
 
-            itemsIndexed(filteredTutorials) { _, item ->
+            itemsIndexed(filteredAndOrderedTutorials) { _, item ->
                 TutorialCard(item)
             }
         }

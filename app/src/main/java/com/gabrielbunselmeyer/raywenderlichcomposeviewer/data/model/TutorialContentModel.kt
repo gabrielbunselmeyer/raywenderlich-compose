@@ -70,9 +70,6 @@ data class Domains(
 data class DomainData(
     @SerializedName("id") val id: Int,
     @SerializedName("type") val type: String,
-//    @SerializedName("attributes") val attributes : Attributes,
-//    @SerializedName("relationships") val relationships : Relationships,
-//    @SerializedName("links") val links : Links
 )
 
 data class Attributes(
@@ -103,3 +100,4 @@ data class ProgressionData(
 data class Bookmark(
     @SerializedName("data") val data: String
 )
+

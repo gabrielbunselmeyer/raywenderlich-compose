@@ -9,7 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -51,4 +54,33 @@ fun Modifier.clearFocusOnKeyboardDismiss(isKeyboardOpen: Boolean): Modifier = co
             }
         }
     }
+}
+
+fun TutorialData.isFilteredOut(state: State): Boolean {
+    // First we filter by the options in the filter menu.
+    if (state.filterDifficulty != Difficulty.ANY) {
+        if (this.attributes.difficulty != state.filterDifficulty.name.lowercase()) {
+            return true
+        }
+    }
+
+    if (state.filterContentType != ContentType.ANY) {
+        if (this.attributes.content_type != state.filterContentType.name.lowercase()) {
+            return true
+        }
+    }
+
+    if (state.filterAccessLevel != AccessLevel.ANY) {
+        if (this.attributes.free && state.filterAccessLevel == AccessLevel.PRO) {
+            return true
+        } else if (!this.attributes.free && state.filterAccessLevel == AccessLevel.FREE) {
+            return true
+        }
+    }
+
+    return false
+}
+
+fun TutorialData.convertDateToSimpleDateFormat(): Date? {
+    return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(this.attributes.released_at)
 }

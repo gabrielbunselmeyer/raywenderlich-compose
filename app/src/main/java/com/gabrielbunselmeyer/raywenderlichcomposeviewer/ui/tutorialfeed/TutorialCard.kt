@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.rememberImagePainter
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.*
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.convertDateToSimpleDateFormat
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.update
 import java.text.SimpleDateFormat
 import java.util.*
@@ -105,10 +106,9 @@ private fun CardTitle(item: TutorialData) {
 private fun CardDescription(item: TutorialData) {
 
     val formattedDate = remember {
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(item.attributes.released_at)
-            ?.let {
-                SimpleDateFormat("MMM d", Locale.US).format(it)
-            }
+        item.convertDateToSimpleDateFormat()?.let {
+            SimpleDateFormat("MMM d", Locale.US).format(it)
+        }
     }
 
     val isVideoCourse = item.attributes.content_type == "collection"
@@ -138,7 +138,8 @@ private fun CardDescription(item: TutorialData) {
                         "${if (isVideoCourse) "Video Course" else "Article"} " +
                         "(${item.attributes.duration} ${if (isVideoCourse) "minutes" else "words"})",
                 style = Typography.caption,
-                modifier = if (isPaidContent) 
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                modifier = if (isPaidContent)
                     Modifier.padding(Dimens.TutorialCard.descriptionInfoTextPadding)
                 else
                     Modifier
