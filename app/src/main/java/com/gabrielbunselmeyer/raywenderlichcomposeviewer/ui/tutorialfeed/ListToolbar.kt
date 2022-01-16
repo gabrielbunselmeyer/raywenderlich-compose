@@ -14,6 +14,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -47,7 +48,7 @@ fun ListToolbar(
     filteredCardNumber: Int,
     dispatcher: (Action) -> Unit) {
 
-    var isFilterMenuExpanded by remember { mutableStateOf(false) }
+    var isFilterMenuExpanded by rememberSaveable { mutableStateOf(false) }
     val filterMenuBackgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
 
     Column(

@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -105,14 +106,20 @@ private fun CardTitle(item: TutorialData) {
 @Composable
 private fun CardDescription(item: TutorialData) {
 
-    val formattedDate = remember {
+    val formattedDate = rememberSaveable {
         item.convertDateToSimpleDateFormat()?.let {
             SimpleDateFormat("MMM d", Locale.US).format(it)
-        }
+        }.orEmpty()
     }
 
     val isVideoCourse = item.attributes.content_type == "collection"
     val isPaidContent = !item.attributes.free
+
+    val descriptionText = rememberSaveable {
+        "Posted $formattedDate \u2022 " +
+                "${if (isVideoCourse) "Video Course" else "Article"} " +
+                "(${item.attributes.duration} ${if (isVideoCourse) "minutes" else "words"})"
+    }
 
     Column(
         modifier = Modifier
@@ -134,9 +141,7 @@ private fun CardDescription(item: TutorialData) {
             }
 
             Text(
-                text = "Posted ${formattedDate.orEmpty()} \u2022 " +
-                        "${if (isVideoCourse) "Video Course" else "Article"} " +
-                        "(${item.attributes.duration} ${if (isVideoCourse) "minutes" else "words"})",
+                text = descriptionText,
                 style = Typography.caption,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                 modifier = if (isPaidContent)
