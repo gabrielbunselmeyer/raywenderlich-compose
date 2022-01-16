@@ -5,11 +5,11 @@ import androidx.compose.ui.unit.dp
 
 object Dimens {
 
-    object FeedScreen {
+    object TutorialList {
         val contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp)
     }
 
-    object ListToolbar {
+    object TutorialListToolbar {
         const val searchTextFieldWidth = 0.80f
 
         val toolbarPadding = PaddingValues(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 14.dp)
@@ -19,9 +19,12 @@ object Dimens {
         val bottomTextPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 14.dp)
         val bottomTextDividerPadding = PaddingValues(horizontal = 8.dp)
 
-        val filterMenuPadding = PaddingValues(start = 8.dp, top = 16.dp, end = 8.dp, bottom = 2.dp)
+        val filterMenuPadding = PaddingValues(start = 8.dp, top = 16.dp, end = 8.dp)
         val filterMenuItemPadding = PaddingValues(bottom = 12.dp)
         val filterSwitchPadding = PaddingValues(start = 8.dp)
+
+        val orderingDropdownWidth = 70.dp
+        val orderingDropdownHeight = 36.dp
     }
 
     object TutorialCard {
@@ -32,7 +35,7 @@ object Dimens {
         val contentPadding = PaddingValues(all = 16.dp)
         val titleTextPadding = PaddingValues(start = 10.dp)
         val cardTitleHeight = 60.dp
-        val cardImageMaxSize = 96.dp
+        val cardImageMaxSize = 80.dp
 
         // We want this very specific value for the text to align with the end of
         // the thumbnail image.

@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 
 /**
  * Because this is a small app, I've opted to using a single ViewModel.
@@ -46,7 +45,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     is Difficulty -> copy(filterDifficulty = action.selectedFilter)
                     is ContentType -> copy(filterContentType = action.selectedFilter)
                     is AccessLevel -> copy(filterAccessLevel = action.selectedFilter)
-                    else -> { throw IllegalStateException("Failed to get filter enum.") }
+                    else -> {
+                        throw IllegalStateException("Failed to get filter enum.")
+                    }
                 }
             }
             is Action.SortingPopupToggled -> mutableState.mutate { copy(isSortingPopupOpen = !state.value.isSortingPopupOpen) }

@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,44 +15,45 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.R
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.clearFocusOnKeyboardDismiss
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.isKeyboardOpen
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.*
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.ListToolbar.filterMenuItemPadding
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.ListToolbar.filterSwitchPadding
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.TutorialListToolbar.filterMenuItemPadding
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.theme.Dimens.TutorialListToolbar.filterSwitchPadding
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.`if`
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.clearFocusOnKeyboardDismiss
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.utils.isKeyboardOpen
 
 @Composable
 fun ListToolbar(
     state: State,
     filteredCardNumber: Int,
-    dispatcher: (Action) -> Unit) {
+    dispatcher: (Action) -> Unit
+) {
 
     var isFilterMenuExpanded by rememberSaveable { mutableStateOf(false) }
-    val filterMenuBackgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
 
     Column(
         modifier = Modifier
-            .padding(Dimens.ListToolbar.toolbarPadding)
+            .padding(Dimens.TutorialListToolbar.toolbarPadding)
             .fillMaxWidth()
     ) {
         Row(
@@ -64,18 +64,12 @@ fun ListToolbar(
                 dispatcherCallback = { dispatcher(it) }
             )
 
-            FilterButton(
-                modifier = if (isFilterMenuExpanded)
-                        Modifier.background(filterMenuBackgroundColor)
-                    else
-                        Modifier
-            ) { isFilterMenuExpanded = !isFilterMenuExpanded }
+            FilterButton(isFilterMenuExpanded) { isFilterMenuExpanded = !isFilterMenuExpanded }
         }
 
         AnimatedVisibility(
             visible = isFilterMenuExpanded,
             modifier = Modifier
-                .background(filterMenuBackgroundColor)
                 .fillMaxWidth()
                 .clip(shape = Shapes.medium)
         ) {
@@ -95,19 +89,23 @@ fun ListToolbar(
 @Composable
 private fun FilterMenu(
     state: State,
-    dispatcher: (Action) -> Unit)
-{
+    dispatcher: (Action) -> Unit
+) {
     Row {
         Column(
-            modifier = Modifier.padding(Dimens.ListToolbar.filterMenuPadding)
+            modifier = Modifier.padding(Dimens.TutorialListToolbar.filterMenuPadding)
         ) {
             FilterSwitch(
                 title = "Content Type",
                 currentSelection = state.filterContentType.displayName,
                 toggleStates = ContentType.values().map { it.displayName }
-            ) { dispatcher(Action.FilterChanged(
-                ContentType.valueOf(if (it == "Video") "Collection".uppercase() else it.uppercase())
-            ))}
+            ) {
+                dispatcher(
+                    Action.FilterChanged(
+                        ContentType.valueOf(if (it == "Video") "Collection".uppercase() else it.uppercase())
+                    )
+                )
+            }
 
             FilterSwitch(
                 title = "Difficulty",
@@ -132,10 +130,16 @@ private fun FilterSwitch(
     toggleStates: List<String>,
     dispatchFilterChange: (String) -> Unit
 ) {
-    Row(modifier = Modifier.padding(filterMenuItemPadding)) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(filterMenuItemPadding)
+    ) {
         Text(
             text = title,
-            style = Typography.subtitle2.copy(letterSpacing = 0.36.sp, fontWeight = FontWeight.W400),
+            style = Typography.subtitle2.copy(
+                letterSpacing = 0.36.sp,
+                fontWeight = FontWeight.W400
+            ),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(bottom = 4.dp)
@@ -145,29 +149,25 @@ private fun FilterSwitch(
         Row(
             modifier = Modifier
                 .padding(filterSwitchPadding)
-                .clip(RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(18.dp))
                 .background(MaterialTheme.colors.surface)
         ) {
             toggleStates.forEachIndexed { _, toggleState ->
                 val isSelected = currentSelection.lowercase() == toggleState.lowercase()
 
-                val toggleItemModifier = Modifier
-                    .widthIn(min = 40.dp)
-                    .heightIn(min = 20.dp)
-                    .toggleable(
-                        value = isSelected,
-                        enabled = true,
-                        onValueChange = {
-                            if (it) dispatchFilterChange(toggleState)
-                        }
-                    )
-
                 Row(
                     horizontalArrangement = Arrangement.Center,
-                    modifier = if (isSelected)
-                            toggleItemModifier.background(TutorialAccessLevelGradient)
-                        else
-                            toggleItemModifier
+                    modifier = Modifier
+                        .widthIn(min = 60.dp)
+                        .heightIn(min = 30.dp)
+                        .toggleable(
+                            value = isSelected,
+                            enabled = true,
+                            onValueChange = {
+                                if (it) dispatchFilterChange(toggleState)
+                            }
+                        )
+                        .`if`(isSelected) { background(TutorialAccessLevelGradient) }
                 ) {
                     Text(
                         text = toggleState,
@@ -178,7 +178,7 @@ private fun FilterSwitch(
                             MaterialTheme.colors.onSurface,
                         modifier = Modifier
                             .align(CenterVertically)
-                            .padding(horizontal = 6.dp)
+                            .padding(horizontal = 8.dp)
                     )
                 }
             }
@@ -188,9 +188,13 @@ private fun FilterSwitch(
 
 @Composable
 private fun FilterButton(
+    isMenuExpanded: Boolean,
     modifier: Modifier = Modifier,
     buttonClick: () -> Unit
 ) {
+    val filterIconColorAnimation by Animations.filterButtonExpandingColor(isMenuExpanded)
+    val filterIconRotation: Float by Animations.filterButtonRotation(isMenuExpanded)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -199,10 +203,12 @@ private fun FilterButton(
             .clickable { buttonClick() }
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_filter),
+            painter = rememberImagePainter(data =  R.drawable.ic_filter),
             contentDescription = "Icon for opening the tutorial list filter menu.",
-            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.50f),
-            modifier = Modifier.size(Dimens.ListToolbar.filterIconSize)
+            tint = filterIconColorAnimation,
+            modifier = Modifier
+                .size(Dimens.TutorialListToolbar.filterIconSize)
+                .rotate(filterIconRotation)
         )
     }
 }
@@ -212,24 +218,27 @@ private fun FilterButton(
 private fun SearchBar(
     state: State,
     dispatcherCallback: (Action) -> Unit,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
     ) {
         var textFieldValue by remember { mutableStateOf(TextFieldValue(state.searchQuery)) }
 
-        // Here we listen for keyboard opening and closing, and dispatch an update to the
-        // relevant state in the ViewModel. It's used to clear focus from the TextField whenever
-        // the keyboard is closed.
-        val view =  LocalView.current
-        val viewTreeObserver = view.viewTreeObserver
-        val listener = ViewTreeObserver.OnGlobalLayoutListener {
-            dispatcherCallback(Action.KeyboardStatusChanged(view.isKeyboardOpen()))
-        }
-        viewTreeObserver.addOnGlobalLayoutListener(listener)
-
+        val view = LocalView.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = FocusRequester()
+
+        LaunchedEffect(Unit) {
+            // Here we listen for keyboard opening and closing, and dispatch an update to the
+            // relevant state in the ViewModel. It's used to clear focus from the TextField whenever
+            // the keyboard is closed.
+            val viewTreeObserver = view.viewTreeObserver
+            val listener = ViewTreeObserver.OnGlobalLayoutListener {
+                dispatcherCallback(Action.KeyboardStatusChanged(view.isKeyboardOpen()))
+            }
+            viewTreeObserver.addOnGlobalLayoutListener(listener)
+        }
 
         TextField(
             value = textFieldValue,
@@ -253,9 +262,14 @@ private fun SearchBar(
                     focusRequester.freeFocus()
                 }
             ),
-            leadingIcon = { Icon(Icons.Filled.Search, "Search icon inside the search text field.") },
+            leadingIcon = {
+                Icon(
+                    Icons.Filled.Search,
+                    "Search icon inside the search text field."
+                )
+            },
             modifier = Modifier
-                .fillMaxWidth(Dimens.ListToolbar.searchTextFieldWidth)
+                .fillMaxWidth(Dimens.TutorialListToolbar.searchTextFieldWidth)
                 .focusRequester(focusRequester)
                 .clearFocusOnKeyboardDismiss(state.isKeyboardOpen)
         )
@@ -272,7 +286,7 @@ private fun BottomInfoText(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(Dimens.ListToolbar.bottomTextPadding)
+        modifier = Modifier.padding(Dimens.TutorialListToolbar.bottomTextPadding)
     ) {
         Text(
             text = "$filteredCardNumber Tutorials",
@@ -282,7 +296,7 @@ private fun BottomInfoText(
         Text(
             text = "\u2022",
             style = ToolbarTextFont,
-            modifier = Modifier.padding(Dimens.ListToolbar.bottomTextDividerPadding)
+            modifier = Modifier.padding(Dimens.TutorialListToolbar.bottomTextDividerPadding)
         )
 
         Row(
@@ -292,12 +306,12 @@ private fun BottomInfoText(
             }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_sort),
+                painter = rememberImagePainter(data = R.drawable.ic_sort),
                 contentDescription = "Icon for selecting the sorting order.",
                 tint = MaterialTheme.colors.onBackground.copy(alpha = 0.70f),
                 modifier = Modifier
-                    .size(Dimens.ListToolbar.sortIconSize)
-                    .padding(Dimens.ListToolbar.sortIconPadding)
+                    .size(Dimens.TutorialListToolbar.sortIconSize)
+                    .padding(Dimens.TutorialListToolbar.sortIconPadding)
             )
 
             Text(
@@ -328,7 +342,10 @@ private fun OrderingDropdown(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(width = 70.dp, height = 36.dp)
+                    .size(
+                        width = Dimens.TutorialListToolbar.orderingDropdownWidth,
+                        height = Dimens.TutorialListToolbar.orderingDropdownHeight
+                    )
                     .clickable {
                         orderSelected(it.displayName)
                         dismissRequested()
@@ -337,7 +354,7 @@ private fun OrderingDropdown(
                 Text(
                     text = it.displayName,
                     style = Typography.button,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
             }
         }

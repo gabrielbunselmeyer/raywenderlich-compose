@@ -10,10 +10,9 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 
 object GeneralColors {
     val deepPurple = Color(0xff26144a)
-    val lightPeach = Color(0xffe1a054)
-    val deepPeach = Color(0xffc37822)
     val lightBurgundy = Color(0xff89529d)
     val deepBlueish = Color(0xff484cf4)
+    val shimmerColor = LightColors.textLightGray.copy(alpha = 0.15f)
 }
 
 private object LightColors {
@@ -21,7 +20,6 @@ private object LightColors {
     val variantPurple = GeneralColors.deepPurple
     val secondaryOffWhite = Color(0xfffaf9ff)
     val backgroundWhite = Color.White
-    val surfaceOffWhite = Color(0xfff2f4ff)
     val surfaceCream = Color(0xFFECEAF3)
 
     val textPurpleBlackish = Color(0xff06013a)
@@ -46,12 +44,6 @@ object GradientColorList {
     )
 }
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
-
 private val LightColorPalette = lightColors(
     primary = LightColors.primaryPurple,
     primaryVariant = LightColors.variantPurple,
@@ -66,17 +58,12 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun RayWenderlichComposeViewerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
-
+    // Due to time constraints I'm not doing a dark theme.
+    // Sacrilegious, I know!
     MaterialTheme(
-        colors = colors,
+        colors = LightColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content

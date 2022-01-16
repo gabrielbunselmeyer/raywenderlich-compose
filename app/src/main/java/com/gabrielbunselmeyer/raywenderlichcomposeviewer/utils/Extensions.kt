@@ -9,7 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
-import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.*
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.AccessLevel
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.ContentType
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.Difficulty
+import com.gabrielbunselmeyer.raywenderlichcomposeviewer.data.model.TutorialData
 import com.gabrielbunselmeyer.raywenderlichcomposeviewer.ui.State
 import java.text.SimpleDateFormat
 import java.util.*
@@ -84,3 +87,20 @@ fun TutorialData.isFilteredOut(state: State): Boolean {
 fun TutorialData.convertDateToSimpleDateFormat(): Date? {
     return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).parse(this.attributes.released_at)
 }
+
+/**
+ * This is a bit spicy. But basically so you can do the following on Modifiers:
+ * .`if` (!isFixed) {
+ *    clickable(onClick = { onCellSelected() })
+ *   }
+ *   Got it from here: https://proandroiddev.com/add-modifier-conditionally-without-sacrificing-its-fluent-api-a572cc085fb2
+ */
+fun Modifier.`if`(
+    condition: Boolean,
+    then: Modifier.() -> Modifier
+): Modifier =
+    if (condition) {
+        then()
+    } else {
+        this
+    }
