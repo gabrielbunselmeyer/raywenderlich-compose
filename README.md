@@ -14,7 +14,17 @@ https://user-images.githubusercontent.com/29930410/149681830-abdeb34d-68c3-4b1c-
 
 ## strucure
 
-a
+Starting with Gradle, I opted for the Kotlin DSL instead of Groovy, and also used the experimental [Version Catalog](https://docs.gradle.org/current/userguide/platforms.html), as seen in [`settings.gradle.kts`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/settings.gradle.kts).
+
+For the application itself, there is a single Activity holding the [`TutorialListScreen`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/tutorialfeed/TutorialListScreen.kt). Then, the list screen composes a [`ListToolbar`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/tutorialfeed/ListToolbar.kt) with a searchbox and filter options as a header to the `LazyColumn` used to list the content.
+
+Brought in through the [GitHub API](https://docs.github.com/en/rest) in [PracticalExamplesRepository](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/data/PracticalExamplesRepository.kt), the resulting JSON is serialized and listed in the UI through the [`TutorialCard`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/tutorialfeed/TutorialCard.kt).
+
+Controlling all this is a single [`MainViewModel`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/MainViewModel.kt). In there, the app [`State`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/ui/State.kt) is created and made available as a [`StateFlow`](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow).
+
+The `MainViewModel` is instantiated in the `MainActivity`, and the `State` observed there. This observable is passed into all the children composables, so the `MainViewModel` itself stays in the `MainActivity`. Together with the `State`, the composables also receive a `Dispatcher` function from the `MainViewModel`, which uses `Actions` to update the `State` and do whatever else is necessary.
+
+This way, composables down the line can observe the `State` and dispatch `Actions` to the `MainViewModel` if needed, without needing direct access to the `MainViewModel` object.
 
 ## libraries used
 Other than the expected Android, Kotlin, AndroidX and Jetpack Compose libs, the following were used:
@@ -31,3 +41,4 @@ Other than the expected Android, Kotlin, AndroidX and Jetpack Compose libs, the 
 - The filters menu should use Chips instead of the current Switches, as those are more common in Android. 
 - The filters UI could be improved significantly to better deal with different screen sizes. Support for those is limited at the moment and the text in each button might get cut in certain scenarios.
 - Searchbar doesn't have a "delete all text" button on its right.
+- There are no tests!!!
