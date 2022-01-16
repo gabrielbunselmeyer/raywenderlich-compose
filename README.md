@@ -45,6 +45,6 @@ Other than the expected Android, Kotlin, AndroidX and Jetpack Compose libs, the 
 - There are no tests!!!
 
 ## github api rate limit
-Inside the (`PracticalExamplesRepository`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/data/PracticalExamplesRepository.kt) you'll find a commented out section. The GitHub API has a rate limit of 60 calls per hour for non-authorized requesters. This proved limiting during development, but, for testing it should be enough.
+Inside the [`PracticalExamplesRepository`](https://github.com/gabrielbunselmeyer/raywenderlich-compose/blob/main/app/src/main/java/com/gabrielbunselmeyer/raywenderlichcomposeviewer/data/PracticalExamplesRepository.kt) you'll find a commented out section. The GitHub API has a rate limit of 60 calls per hour for non-authorized requesters. This proved limiting during development, but, for testing it should be enough.
 
 Regardless, I left in the `Interceptor` I used while developing the app and instructions on how to use it. If you find the rate limit to be too low, you can change it up to use your own GitHub profile and an access token.
